@@ -1,26 +1,57 @@
+import os
 import subprocess
 
-result = None
+def run_bash(command: list[str]) -> tuple[str, str]:
+    command = " ".join(command)
 
-file = "./general/wave_a_flag/warm"
+    print(f"Running bash command : `{command}`", end="...")
+    
+    p = subprocess.Popen(["bash"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    
+    out, err = p.communicate(command.encode())
 
-p = subprocess.Popen(["bash"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-stdout, stderr = p.communicate(file.encode())
+    print("Done\n")
+    
+    try:
+        out, err = out.decode(), err.decode()
+    except:
+        pass
 
-print(f"Output : {stdout}")
-print()
+    if not err:
+        print("Output received : ")
+        print(out or None)
+    else:
+        print("Error caught : ")
+        print(err)
 
-p = subprocess.Popen(["bash"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print()
 
-query = f"{file} -h"
-stdout, stderr = p.communicate(query.encode())
+    return out, err
 
-print(f"Output : {stdout}")
-print()
+def password_found(pw: str) -> str:
+    name = __file__.split(".")[0]
+    
+    dir = f"{name}-flag.txt"
 
-output = stdout.decode()
-output = output.split(": ")
+    print(f"Password Found : {pw}\n")
 
-result = output[-1]
+    print(f"Saving password to {dir}", end="...")
+    
+    with open(dir, "w+") as f:
+        f.write(pw)
 
-print(f"Flag found : {result}")
+    print("Done\n")
+
+    return dir
+
+file = "./general/wave-a-flag/warm"
+
+out, err = run_bash([file])
+
+out, err = run_bash([file, "-h"])
+
+result = out.split(": ")
+result = result[-1]
+result = result.strip("\n")
+
+dir = password_found(result)
