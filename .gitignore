@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 forensics/sleuthkit-apprentice/disk.flag.img
+forensics/disk-disk-sleuth/dds1-alpine.flag.img
