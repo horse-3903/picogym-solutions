@@ -1,18 +1,18 @@
 import subprocess
 
-def save_password(pw: str, file: str) -> str:
+def save_flag(flag: str, file: str) -> str:
     name = file.split(".")[0]
     
     dir = f"{name}-flag.txt"
 
-    pw = pw.strip()
+    flag = flag.strip()
 
-    print(f"Password Found : {pw}\n")
+    print(f"Flag found : {flag}\n")
 
-    print(f"Saving password to {dir}", end="...")
+    print(f"Saving flag to {dir}", end="...")
     
     with open(dir, "w+") as f:
-        f.write(pw)
+        f.write(flag)
 
     print("Done\n")
 
