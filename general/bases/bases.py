@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("")
 
-from util import save_flag
+from misc.util import save_flag
 import base64
 
 b64_str = "bDNhcm5fdGgzX3IwcDM1"

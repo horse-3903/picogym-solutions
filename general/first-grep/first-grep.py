@@ -1,6 +1,6 @@
 import sys
 sys.path.append("")
-from util import save_flag, run_bash
+from misc.util import save_flag, run_bash
 
 out, err = run_bash(["cat", "general/first-grep/file", "|", "grep", "picoCTF{"])
 

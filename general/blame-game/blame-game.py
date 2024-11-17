@@ -3,7 +3,7 @@ import sys
 
 sys.path.append(".")
 
-from util import *
+from misc.util import *
 
 cur_dir = os.path.dirname(__file__).replace("\\", "/")
 cur_dir = "." + cur_dir.split("picogym-solutions")[-1]

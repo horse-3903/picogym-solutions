@@ -1,6 +1,6 @@
 import sys
 sys.path.append("")
-from util import save_flag, run_bash
+from misc.util import save_flag, run_bash
 
 result = None
 
