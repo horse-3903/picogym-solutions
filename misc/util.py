@@ -51,7 +51,6 @@ import subprocess
 def git_push(name: str):
     print("Running Git Push function...", end=" ")
 
-    # Ensure the commit.bat file exists
     script_dir = os.path.dirname(os.path.abspath(__file__))
     batch_file_path = os.path.join(script_dir, "commit.bat")
 
@@ -59,10 +58,8 @@ def git_push(name: str):
         print("Error: commit.bat not found!")
         return
 
-    # Prepare the command to run
     command = f'echo "{name}" | "{batch_file_path}"'
 
-    # Run the command using subprocess
     p = subprocess.Popen(
         command,
         cwd=script_dir,
