@@ -45,27 +45,46 @@ def run_bash(command: list[str]) -> tuple[str, str] | tuple[bytes, bytes]:
 
     return out, err
 
+import os
+import subprocess
+
 def git_push(name: str):
-    print(f"Running Git Push function", end="...")
-    
-    command = f'echo "{name}" | commit.bat'
-    print(command)
-        
-    p = subprocess.Popen([command, ], cwd="/".join(__file__.split("\\")[:-1]), shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print("Running Git Push function...", end=" ")
+
+    # Ensure the commit.bat file exists
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    batch_file_path = os.path.join(script_dir, "commit.bat")
+
+    if not os.path.isfile(batch_file_path):
+        print("Error: commit.bat not found!")
+        return
+
+    # Prepare the command to run
+    command = f'echo "{name}" | "{batch_file_path}"'
+
+    # Run the command using subprocess
+    p = subprocess.Popen(
+        command,
+        cwd=script_dir,
+        shell=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
 
     out, err = p.communicate()
 
     print("Done\n")
-    
+
     try:
-        out, err = out.decode("unicode-escape"), err.decode("unicode-escape")
+        out, err = out.decode(), err.decode()
     except:
         pass
-    
+
     print(out)
 
     if err:
-        print("Error caught : ")
+        print("Error caught:")
         print(err)
         
 if __name__ == "__main__":
