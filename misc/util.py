@@ -44,3 +44,29 @@ def run_bash(command: list[str]) -> tuple[str, str] | tuple[bytes, bytes]:
     print()
 
     return out, err
+
+def git_push(name: str):
+    print(f"Running Git Push function", end="...")
+    
+    command = f'echo "{name}" | commit.bat'
+    print(command)
+        
+    p = subprocess.Popen([command, ], cwd="/".join(__file__.split("\\")[:-1]), shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    out, err = p.communicate()
+
+    print("Done\n")
+    
+    try:
+        out, err = out.decode("unicode-escape"), err.decode("unicode-escape")
+    except:
+        pass
+    
+    print(out)
+
+    if err:
+        print("Error caught : ")
+        print(err)
+        
+if __name__ == "__main__":
+    git_push("update : util.py")
